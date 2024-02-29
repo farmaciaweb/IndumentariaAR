@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -89,8 +90,15 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
+        img {
+            max-width: 50px;
+            max-height: 50px;
+            margin-left: 10px;
+        }
     </style>
 </head>
+
 <body>
     <img src="INICIO.jpg" alt="Logo" style="max-width: 100%; height: auto;">
     <h2>Registro de Productos</h2>
@@ -101,7 +109,10 @@
         <br>
         <label for="precioProducto">Precio del Producto:</label>
         <input type="number" id="precioProducto" required>
-
+        <br>
+        <label for="imagenProducto">Imagen del Producto:</label>
+        <input type="file" id="imagenProducto" accept="image/*">
+        <br>
         <button type="button" onclick="cargarProducto()">Cargar Producto</button>
     </form>
 
@@ -113,8 +124,7 @@
     <p>¡Síguenos en <a href="https://www.instagram.com/indumentaria_ar/" target="_blank">Instagram</a> para más novedades!</p>
 
     <script>
-        // Cargar productos almacenados en localStorage al cargar la página
-        window.onload = function() {
+        window.onload = function () {
             cargarProductosAlmacenados();
         };
 
@@ -122,13 +132,13 @@
             var productos = JSON.parse(localStorage.getItem('productos')) || [];
             var listaProductos = document.getElementById("listaProductos");
 
-            // Limpiar la lista antes de agregar los productos almacenados
             listaProductos.innerHTML = "";
 
-            productos.forEach(function(producto) {
+            productos.forEach(function (producto) {
                 var listItem = document.createElement("li");
                 listItem.innerHTML = "<strong>" + producto.nombre + "</strong> - Precio: $" + producto.precio +
-                                     "<button class='eliminar' onclick='eliminarProducto(\"" + producto.nombre + "\")'>Eliminar</button>";
+                    "<img src='" + producto.imagen + "' alt='" + producto.nombre + "' class='imagenProducto'>" +
+                    "<button class='eliminar' onclick='eliminarProducto(\"" + producto.nombre + "\")'>Eliminar</button>";
                 listaProductos.appendChild(listItem);
             });
         }
@@ -136,50 +146,39 @@
         function cargarProducto() {
             var nombreProducto = document.getElementById("nombreProducto").value;
             var precioProducto = document.getElementById("precioProducto").value;
+            var imagenProducto = document.getElementById("imagenProducto").files[0];
 
-            if (nombreProducto === "" || precioProducto === "") {
+            if (nombreProducto === "" || precioProducto === "" || !imagenProducto) {
                 alert("Por favor, completa todos los campos.");
                 return;
             }
 
-            // Crear un objeto con el nombre y precio del producto
             var nuevoProducto = {
                 nombre: nombreProducto,
-                precio: precioProducto
+                precio: precioProducto,
+                imagen: URL.createObjectURL(imagenProducto)
             };
 
-            // Obtener productos almacenados en localStorage
             var productos = JSON.parse(localStorage.getItem('productos')) || [];
-
-            // Agregar el nuevo producto al array de productos
             productos.push(nuevoProducto);
-
-            // Guardar el array actualizado en localStorage
             localStorage.setItem('productos', JSON.stringify(productos));
 
-            // Actualizar la lista de productos en la página
             cargarProductosAlmacenados();
 
-            // Limpiar los campos del formulario después de cargar el producto
             document.getElementById("nombreProducto").value = "";
             document.getElementById("precioProducto").value = "";
+            document.getElementById("imagenProducto").value = ""; // Limpiar el campo de imagen
         }
 
         function eliminarProducto(nombreProducto) {
-            // Obtener productos almacenados en localStorage
             var productos = JSON.parse(localStorage.getItem('productos')) || [];
-
-            // Filtrar el producto a eliminar por nombre
-            productos = productos.filter(function(producto) {
+            productos = productos.filter(function (producto) {
                 return producto.nombre !== nombreProducto;
             });
-
-            // Guardar el array actualizado en localStorage
             localStorage.setItem('productos', JSON.stringify(productos));
-
-            // Actualizar la lista de productos en la página
             cargarProductosAlmacenados();
         }
     </script>
 </body>
+
 </html>
