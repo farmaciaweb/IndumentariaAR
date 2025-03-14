@@ -1,184 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Productos</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-
-        #productos {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        form {
-            max-width: 400px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 16px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            background-color: #4caf50;
-            color: #fff;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 10px;
-            font-size: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        a {
-            color: #3498db;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .eliminar {
-            background-color: #e74c3c;
-            color: #fff;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        img {
-            max-width: 50px;
-            max-height: 50px;
-            margin-left: 10px;
-        }
-    </style>
+    <title>Diseños de Camisetas - [Tu Marca]</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <img src="INICIO.jpg" alt="Logo" style="max-width: 100%; height: auto;">
-    <h2>Registro de Productos</h2>
+    <!-- Encabezado -->
+    <header>
+        <div class="container">
+            <h1>AR Diseños</h1>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#diseños">Diseños</a></li>
+                    <li><a href="#subir-boceto">Subir Boceto</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <form id="formularioProductos">
-        <label for="nombreProducto">Nombre del Producto:</label>
-        <input type="text" id="nombreProducto" required>
-        <br>
-        <label for="precioProducto">Precio del Producto:</label>
-        <input type="number" id="precioProducto" required>
-        <br>
-        <label for="imagenProducto">Imagen del Producto:</label>
-        <input type="file" id="imagenProducto" accept="image/*">
-        <br>
-        <button type="button" onclick="cargarProducto()">Cargar Producto</button>
-    </form>
+    <!-- Sección de Inicio -->
+    <section id="inicio">
+        <div class="container">
+            <h2>Bienvenido a AR DiseñoS</h2>
+            <p>Explora nuestros diseños únicos y personaliza tu camiseta. ¡O sube tu boceto para mejorar tu diseño!</p>
+            <a href="#subir-boceto" class="btn">Sube tu boceto</a>
+        </div>
+    </section>
 
-    <div id="productos">
-        <h3>Productos Cargados</h3>
-        <ul id="listaProductos"></ul>
-    </div>
+    <!-- Sección de Diseños -->
+    <section id="diseños">
+        <div class="container">
+            <h2>Diseños Disponibles</h2>
+            <div class="galeria">
+                <!-- Diseño 1 -->
+                <div class="item">
+                    <img src="./camisetas muestra/1.png" alt="Camiseta Diseño 1">
+                    <p>Camiseta Diseño 1</p>
+                </div>
+                <!-- Diseño 2 -->
+                <div class="item">
+                    <img src="./camisetas muestra/camiseta panaderia.png" alt="Camiseta Diseño 2">
+                    <p>Camiseta Diseño 2</p>
+                </div>
+                <!-- Diseño 3 -->
+                <div class="item">
+                    <img src="./camisetas muestra/camisetaprueba.png" alt="Camiseta Diseño 3">
+                    <p>Camiseta Diseño 3</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <p>¡Síguenos en <a href="https://www.instagram.com/indumentaria_ar/" target="_blank">Instagram</a> para más novedades!</p>
+    <!-- Sección Subir Boceto -->
+    <section id="subir-boceto">
+        <div class="container">
+            <h2>Mejora tu Boceto</h2>
+            <p>Sube tu boceto para que podamos ayudarte a mejorar el diseño de tu camiseta.</p>
+            <form action="/enviar-boceto" method="post" enctype="multipart/form-data">
+                <label for="nombre">Tu nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
 
-    <script>
-        window.onload = function () {
-            cargarProductosAlmacenados();
-        };
+                <label for="correo">Tu correo electrónico:</label>
+                <input type="email" id="correo" name="correo" required>
 
-        function cargarProductosAlmacenados() {
-            var productos = JSON.parse(localStorage.getItem('productos')) || [];
-            var listaProductos = document.getElementById("listaProductos");
+                <label for="boceto">Sube tu boceto:</label>
+                <input type="file" id="boceto" name="boceto" accept=".png, .jpg, .jpeg" required>
 
-            listaProductos.innerHTML = "";
+                <label for="mensaje">Comentario (opcional):</label>
+                <textarea id="mensaje" name="mensaje"></textarea>
 
-            productos.forEach(function (producto) {
-                var listItem = document.createElement("li");
-                listItem.innerHTML = "<strong>" + producto.nombre + "</strong> - Precio: $" + producto.precio +
-                    "<img src='" + producto.imagen + "' alt='" + producto.nombre + "' class='imagenProducto'>" +
-                    "<button class='eliminar' onclick='eliminarProducto(\"" + producto.nombre + "\")'>Eliminar</button>";
-                listaProductos.appendChild(listItem);
-            });
-        }
+                <button type="submit" class="btn">Enviar Boceto</button>
+            </form>
+        </div>
+    </section>
 
-        function cargarProducto() {
-            var nombreProducto = document.getElementById("nombreProducto").value;
-            var precioProducto = document.getElementById("precioProducto").value;
-            var imagenProducto = document.getElementById("imagenProducto").files[0];
-
-            if (nombreProducto === "" || precioProducto === "" || !imagenProducto) {
-                alert("Por favor, completa todos los campos.");
-                return;
-            }
-
-            var nuevoProducto = {
-                nombre: nombreProducto,
-                precio: precioProducto,
-                imagen: URL.createObjectURL(imagenProducto)
-            };
-
-            var productos = JSON.parse(localStorage.getItem('productos')) || [];
-            productos.push(nuevoProducto);
-            localStorage.setItem('productos', JSON.stringify(productos));
-
-            cargarProductosAlmacenados();
-
-            document.getElementById("nombreProducto").value = "";
-            document.getElementById("precioProducto").value = "";
-            document.getElementById("imagenProducto").value = ""; // Limpiar el campo de imagen
-        }
-
-        function eliminarProducto(nombreProducto) {
-            var productos = JSON.parse(localStorage.getItem('productos')) || [];
-            productos = productos.filter(function (producto) {
-                return producto.nombre !== nombreProducto;
-            });
-            localStorage.setItem('productos', JSON.stringify(productos));
-            cargarProductosAlmacenados();
-        }
-    </script>
+    <!-- Pie de Página -->
+    <footer id="contacto">
+        <div class="container">
+            <p>&copy; 2025 [Tu Marca]. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 </body>
-
 </html>
